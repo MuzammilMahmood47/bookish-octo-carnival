@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Laiba Asif 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .handwritten {
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* Floating Hearts Background */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            animation: floatUp 10s linear infinite;
+            z-index: -1;
+            user-select: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        #yesBtn {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .no-btn {
+            transition: all 0.1s ease;
+            position: absolute;
+        }
+
+        /* Success Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex items-center justify-center relative">
+
+    <!-- Dynamic Background Hearts -->
+    <div id="bg-hearts-container"></div>
+
+    <!-- Main Card -->
+    <div class="glass-card p-8 md:p-12 text-center max-w-md w-full mx-4 transform transition-all duration-500 hover:scale-[1.02]">
+        
+        <!-- Content Wrapper -->
+        <div id="mainContent">
+            <!-- Cute Image/Icon -->
+            <div class="text-6xl mb-4 animate-bounce">🥺</div>
+            
+            <h2 class="text-white text-lg font-bold tracking-widest uppercase mb-1 drop-shadow-md">To My Bestie</h2>
+            <h1 class="handwritten text-4xl md:text-5xl text-pink-600 mb-6 drop-shadow-sm">Laiba Asif ✨</h1>
+
+            <p class="text-gray-800 text-xl mb-8 font-medium leading-relaxed">
+                I'm craving Chai and good company.<br>
+                <span class="text-pink-700 font-bold bg-white/30 px-2 py-1 rounded">Will you treat me? ☕</span>
+            </p>
+
+            <!-- Buttons -->
+            <div class="relative h-24 w-full flex justify-center items-center">
+                
+                <!-- 2nd No Button (New) - Starts on Left -->
+                <button id="noBtn2" onmouseover="moveButton(this)" ontouchstart="moveButton(this)" class="no-btn bg-red-400 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-full shadow-lg border-b-4 border-red-600 active:border-red-400 cursor-pointer" style="left: 15%; top: 50%; transform: translate(-50%, -50%);">
+                    No
+                </button>
+
+                <!-- Yes Button (Center) -->
+                <button id="yesBtn" onclick="acceptTea()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg border-b-4 border-green-700 active:border-green-500 z-10 text-xl whitespace-nowrap">
+                    Yes!
+                </button>
+                
+                <!-- 1st No Button - Starts on Right -->
+                <button id="noBtn1" onmouseover="moveButton(this)" ontouchstart="moveButton(this)" class="no-btn bg-red-400 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-full shadow-lg border-b-4 border-red-600 active:border-red-400 cursor-pointer" style="left: 85%; top: 50%; transform: translate(-50%, -50%);">
+                    No
+                </button>
+            </div>
+        </div>
+
+        <!-- Success Message (Hidden Initially) -->
+        <div id="successMessage" class="hidden transform transition-all duration-500 scale-0">
+            <div class="text-7xl mb-4">🥰🫖🎉😘</div>
+            <h3 class="handwritten text-4xl text-pink-600 mb-2">YAYYY!</h3>
+            <p class="text-gray-800 text-lg font-bold">I knew you were the best, Laiba Asif! ❤️😘</p>
+            <p class="text-gray-600 text-sm mt-2">Screenshot this and send it to Muzammil Mahmood!</p>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const mainContent = document.getElementById('mainContent');
+        const successMessage = document.getElementById('successMessage');
+        let scaleSize = 1;
+
+        // Initialize Background Hearts
+        function createHearts() {
+            const container = document.getElementById('bg-hearts-container');
+            const hearts = ['💖', '🌸', '☕', '✨', '🧁'];
+            
+            for(let i=0; i<20; i++) {
+                const el = document.createElement('div');
+                el.classList.add('bg-heart');
+                el.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                el.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(el);
+            }
+        }
+        createHearts();
+
+        function moveButton(btn) {
+            // Logic: Move specific No button AND make Yes button bigger
+            
+            // 1. Move the specific Button that was hovered
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 40);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 40);
+            
+            btn.style.position = 'fixed'; // Switch to fixed to jump anywhere
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+            
+            // 2. Change Text
+            const phrases = ["Wrong one!", "Nope!", "Can't catch me!", "Try Yes!", "Too slow!"];
+            btn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+            
+            // 3. Grow Yes Button
+            scaleSize += 0.2;
+            yesBtn.style.transform = `scale(${scaleSize})`;
+        }
+
+        function acceptTea() {
+            // Hide the game part
+            mainContent.style.display = 'none';
+            
+            // Hide all No buttons
+            document.querySelectorAll('.no-btn').forEach(btn => btn.style.display = 'none');
+            
+            // Show success with animation
+            successMessage.classList.remove('hidden');
+            setTimeout(() => {
+                successMessage.classList.remove('scale-0');
+                successMessage.classList.add('scale-100');
+            }, 10);
+            
+            startConfetti();
+        }
+
+        // Simple Confetti Implementation
+        function startConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+            for(let i=0; i<150; i++) {
+                const conf = document.createElement('div');
+                conf.classList.add('confetti');
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = -10 + 'px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Physics animation
+                const animation = conf.animate([
+                    { transform: `translate(0, 0) rotate(0)`, opacity: 1 },
+                    { transform: `translate(${Math.random()*200 - 100}px, 100vh) rotate(720deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 2000 + 1500,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+                
+                document.body.appendChild(conf);
+                animation.onfinish = () => conf.remove();
+            }
+        }
+    </script>
+</body>
+</html>
